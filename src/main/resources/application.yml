@@ -1,0 +1,15 @@
+
+server:
+  port: ${vcap.application.port:8080}
+
+
+elastic_search:
+  client:
+    service: 
+      serviceUrl: ${vcap.services.es-service.credentials.url:http://127.0.0.1}
+      servicePort: ${vcap.services.es-service.credentials.port:1060}
+      esindex: ${vcap.services.es-service.credentials.esindex:us_large_cities}
+
+---
+spring:
+  profiles: cloud

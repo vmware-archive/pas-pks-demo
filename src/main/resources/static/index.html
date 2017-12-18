@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+	
+	<title>Large US Cities</title>
+
+	<meta charset="utf-8" />
+	
+	<link rel="shortcut icon" type="image/x-icon" href="docs/images/favicon.ico" />
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ==" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js" integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log==" crossorigin=""></script>
+	<script src="//code.jquery.com/jquery-2.0.0.min.js"></script>
+
+<link href='http://fonts.googleapis.com/css?family=Milonga'
+	rel='stylesheet' type='text/css'>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<style type="text/css">
+body {
+	padding: 0;
+	margin: 0;
+}
+html,body,#map {
+	height: 100%;
+	font-family: 'Milonga', cursive;
+}
+.leaflet-container .leaflet-control-zoom {
+	margin-left: 13px;
+	margin-top: 70px;
+}
+#map {
+	z-index: 2;
+}
+#title {
+	z-index: 1;
+	position: absolute;
+	left: 10px;
+}
+</style>
+	
+</head>
+<body>
+
+	<h1 id="title">Listing of Large US Cities</h1>
+
+<div id="mapid" style="width: 1600px; height: 900px;"></div>
+<script>
+
+	var mymap = L.map('mapid').setView([40.73, -74.1], 10);
+	var markerLayerGroup = L.layerGroup().addTo(mymap);
+
+	L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+		maxZoom: 18,
+		attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+			'<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+			'Imagery © <a href="http://mapbox.com">Mapbox</a>',
+		id: 'mapbox.streets'
+	}).addTo(mymap);
+
+	function getPins(e){	
+		bounds = mymap.getBounds();
+		url = "/geobound/find?lat1=" + bounds.getNorthEast().lat + "&lon1=" + bounds.getNorthEast().lng + "&lat2=" + bounds.getSouthWest().lat + "&lon2=" + bounds.getSouthWest().lng;
+		$.get(url, pinTheMap, "json")
+	}     
+
+	function pinTheMap(data){
+
+      //clear the current pins
+      mymap.removeLayer(markerLayerGroup);
+ 
+      //add the new pins
+      var markerArray = new Array(data.length)     
+      
+      for (var i = 0; i < data.length; i++){
+        park = data[i];
+        markerArray[i] = L.marker([park.position[0], park.position[1]]).bindPopup(park.name);
+      }
+
+      markerLayerGroup = L.layerGroup(markerArray).addTo(mymap);
+    }
+
+    this.mymap.on('dragend', getPins);
+    this.mymap.on('zoomend', getPins);
+    this.mymap.whenReady(getPins)
+
+</script>
+
+
+
+</body>
+</html>
