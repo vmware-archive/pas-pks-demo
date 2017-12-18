@@ -23,3 +23,9 @@ Please follow these steps to deploy this application.
 ## Testing the application
 
 1. Navigate to the route thats created for the application.
+
+<br><img src="https://github.com/gvijayar/springboot-elasticsearch/blob/master/docs/default.jpg" width="50%"/>
+
+2. You can now interact with the map by zooming in/out or shifting the focus. It should execute a new Geo Positional query against PKS and repaint the map.
+
+<br><img src="https://github.com/gvijayar/springboot-elasticsearch/blob/master/docs/zoom.jpg" width="50%"/>
