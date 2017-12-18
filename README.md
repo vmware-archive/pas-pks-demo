@@ -23,4 +23,3 @@ Please follow these steps to deploy this application.
 ## Testing the application
 
 1. Navigate to the route thats created for the application.
-
