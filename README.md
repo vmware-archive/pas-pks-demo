@@ -1,5 +1,8 @@
 # SpringBoot and Elastic Search Example on Cloud Foundry
 
+## Install PKS with Elastic Search
+
+## Install the Spring Boot application on PAS
 This is a sample SpringBoot application that performs Geo Bounded queries against an Elastic Search instance and plots the data on a map interactively. This application can be run on a workstation or in a cloud environment such as Cloud Foundry. In this example, I will show how to deploy the application on a running Cloud Foundry instance. 
 
 Please follow these steps to deploy this application.
@@ -16,3 +19,8 @@ Please follow these steps to deploy this application.
 
 4. Push the application to Cloud Foundry. The manifest.yml has a dependency on the user provided service created above.
 <ul><pre>cf push</pre></ul>
+
+## Testing the application
+
+1. Navigate to the route thats created for the application.
+
